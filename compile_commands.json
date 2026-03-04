@@ -1,0 +1,47 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/aarch64-linux-gnu-gcc",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-c",
+      "-o",
+      "build/kernel_c.o",
+      "src/kernel.c"
+    ],
+    "directory": "/home/jaro/projects/rasp_pi_zero2",
+    "file": "/home/jaro/projects/rasp_pi_zero2/src/kernel.c",
+    "output": "/home/jaro/projects/rasp_pi_zero2/build/kernel_c.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/aarch64-linux-gnu-gcc",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-c",
+      "-o",
+      "build/mini_uart_c.o",
+      "src/mini_uart.c"
+    ],
+    "directory": "/home/jaro/projects/rasp_pi_zero2",
+    "file": "/home/jaro/projects/rasp_pi_zero2/src/mini_uart.c",
+    "output": "/home/jaro/projects/rasp_pi_zero2/build/mini_uart_c.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/aarch64-linux-gnu-gcc",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/boot_s.o",
+      "src/boot.S"
+    ],
+    "directory": "/home/jaro/projects/rasp_pi_zero2",
+    "file": "/home/jaro/projects/rasp_pi_zero2/src/boot.S",
+    "output": "/home/jaro/projects/rasp_pi_zero2/build/boot_s.o"
+  }
+]
