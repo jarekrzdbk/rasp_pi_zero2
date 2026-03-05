@@ -34,14 +34,17 @@
   {
     "arguments": [
       "/usr/bin/aarch64-linux-gnu-gcc",
+      "-Wall",
+      "-ffreestanding",
       "-Iinclude",
+      "-mgeneral-regs-only",
       "-c",
       "-o",
-      "build/boot_s.o",
-      "src/boot.S"
+      "build/uart_c.o",
+      "src/uart.c"
     ],
     "directory": "/home/jaro/projects/rasp_pi_zero2",
-    "file": "/home/jaro/projects/rasp_pi_zero2/src/boot.S",
-    "output": "/home/jaro/projects/rasp_pi_zero2/build/boot_s.o"
+    "file": "/home/jaro/projects/rasp_pi_zero2/src/uart.c",
+    "output": "/home/jaro/projects/rasp_pi_zero2/build/uart_c.o"
   }
 ]

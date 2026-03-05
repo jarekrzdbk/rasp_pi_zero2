@@ -7,7 +7,7 @@ unsigned int calculate_baud_reg(unsigned int baud) {
     return (UART_CLOCK_HZ / (8u * baud)) - 1u;
 }
 
-void uart_send(char c) {
+void mini_uart_send(char c) {
     while (1) {
         if (get32(AUX_MU_LSR_REG)&0x20)
             break;
@@ -15,7 +15,7 @@ void uart_send(char c) {
     put32(AUX_MU_IO_REG, c);
 }
 
-char uart_recv(void) {
+char mini_uart_recv(void) {
     while (1) {
         if (get32(AUX_MU_LSR_REG)&0x01)
             break;
@@ -23,13 +23,13 @@ char uart_recv(void) {
     return (get32(AUX_MU_IO_REG)&0xFF);
 }
 
-void uart_send_string(char *str) {
+void mini_uart_send_string(char *str) {
     for (int i = 0; str[i] != '\0'; i++) {
-        uart_send((char)str[i]);
+        mini_uart_send((char)str[i]);
     }
 }
 
-void uart_init(void) {
+void mini_uart_init(void) {
     unsigned int selector;
     selector = get32(GPFSEL1);
     selector &= ~(7<<12);
