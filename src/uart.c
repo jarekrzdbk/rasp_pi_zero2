@@ -39,9 +39,6 @@ void uart_init(void) {
     // Disable UART
     unsigned int control;
     unsigned int lcrh;
-    unsigned int ibrd;
-    double fbrd;
-    double buaddiv;
     control = get32(UART_CR);
     control &= ~(UARTCR_UARTEN | UARTCR_RXE | UARTCR_TXE);
     put32(UART_CR, control);
@@ -52,15 +49,18 @@ void uart_init(void) {
     lcrh &= ~UARTLCRH_FEN;
     put32(UART_LCRH, lcrh);
 
+    // As per documentation Baud Rate Divisor = UARTCLK/(16×Baud Rate) = BRDI + BRDF
+    // It stores BRDF as m, BRDF = m/64
+    // BUADDIV*64=BRDI*64 + m
+    // BUADDIV*64 = FUARTCLK/16 * Baud * 64 = FUARTCLK * 4 / Baud
+    // Integer part ibrd = BUADDIV*64/64
+    // Fractional part fbrd = BUADDIV*64%64
+    unsigned brd_x64 = (FUARTCLK * 4u + BAUD_RATE / 2u) / BAUD_RATE; 
+    unsigned ibrd = brd_x64 / 64u;
+    unsigned fbrd = brd_x64 % 64u;
 
-    buaddiv =  (double)FUARTCLK / (16 * (double)BAUD_RATE);
-    ibrd = (int)buaddiv;
     put32(UART_IBRD, ibrd);
-
-    long long f = (long long)buaddiv;
-    fbrd = buaddiv - (double)f;
-    unsigned int f_brd = (int)(fbrd * 64 + 0.5);
-    put32(UART_FBRD, f_brd);
+    put32(UART_FBRD, fbrd);
 
     lcrh = get32(UART_LCRH);
     lcrh &= ~(3u << 5);
