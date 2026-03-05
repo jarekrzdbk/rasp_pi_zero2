@@ -3,6 +3,10 @@
 #include "peripherals/gpio.h"
 #include <utils.h>
 
+unsigned int calculate_baud_reg(unsigned int baud) {
+    return (UART_CLOCK_HZ / (8u * baud)) - 1u;
+}
+
 void uart_send(char c) {
     while (1) {
         if (get32(AUX_MU_LSR_REG)&0x20)
@@ -50,7 +54,7 @@ void uart_init(void) {
     put32(AUX_MU_LCR_REG, 3);
     // Set RTS high
     put32(AUX_MU_MCR_REG, 0);
-    put32(AUX_MU_BAUD_REG, 270);
+    put32(AUX_MU_BAUD_REG, calculate_baud_reg(BAUD_RATE));
     // Enable transmit receive
     put32(AUX_MU_CNTL_REG, 3);
 }
